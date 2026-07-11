@@ -76,9 +76,9 @@ pipeline {
                     sh 'git remote set-url origin https://${USER}:${PASS}@github.com/Titobid/jenkins-project-08.git'
                     sh 'git config --global user.email "jenkins@example.com" '
                     sh 'git config --global user.name "jenkins" '
-                    sh 'if [ -f package-lock.json ]; then
+                    sh '''if [ -f package-lock.json ]; then
                         git add package-lock.json
-                        fi'
+                        fi'''
                     sh 'git commit -m "ci: bump version to $APP_VERSION"'
                     sh 'git push origin HEAD:main'
                     sh 'git status'
