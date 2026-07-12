@@ -17,6 +17,15 @@ pipeline {
                 }
             }
         }
+        stage('Check workspace') {
+            steps {
+                sh '''
+                    pwd
+                    ls -la
+                    find . -maxdepth 4 -name package.json -print
+                '''
+            }
+        }
         stage ("increment version"){
             steps {
                 script {
