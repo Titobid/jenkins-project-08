@@ -3,7 +3,7 @@ def gv
 pipeline {
     agent any
     tools {
-        nodejs 'NodeJS 26'
+        nodejs 'NodeJS 24'
     }
     environment {
         DOCKER_REPOSITORY = 'titobid/jenkins-app'
