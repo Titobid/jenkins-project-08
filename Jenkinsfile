@@ -60,7 +60,7 @@ pipeline {
             steps {
                 script{
                     echo 'Building docker image .... '
-                    sh "docker build -t $DOCKER_REPOSITORY:$IMAGE_TAG"
+                    sh "docker build -t $DOCKER_REPOSITORY:$IMAGE_TAG ."
                 }
             }
         }
