@@ -78,8 +78,8 @@ pipeline {
         stage ("commiting version update") {
             steps{
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github-cred', passwordVariable: 'GIT_PASS', usernameVariable:'GIT_USER')]) {
-                    sh 'git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/Titobid/jenkins-project-08.git'
+                    withCredentials([gitUsernamePassword(credentialsId: 'github-cred', gitToolName: 'Default')]) {
+                    sh 'git remote set-url origin https://github.com/Titobid/jenkins-project-08.git'
                     sh 'git config --global user.email "jenkins@example.com" '
                     sh 'git config --global user.name "jenkins" '
                     sh 'git add app/package.json'
