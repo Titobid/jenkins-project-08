@@ -1,7 +1,7 @@
 library identifier: 'jenkins-shared-library@NodeJS-shared-library', retriever: modernSCM(
         [$class:'GitSCMSource',
          remote: 'https://github.com/Titobid/Jenkins-shared-library.git',
-         credentialsID: 'github-cred'])
+         credentialsId: 'github-cred'])
 
 pipeline {
     agent any
