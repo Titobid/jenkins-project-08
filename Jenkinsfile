@@ -17,45 +17,42 @@ pipeline {
                 }
             }
         }
-        stage('Check workspace') {
-            steps {
-                sh '''
-                    pwd
-                    ls -la
-                    find . -maxdepth 4 -name package.json -print
-                '''
-            }
-        }
         stage ("increment version"){
             steps {
-                script {
-                    echo 'incrementing app version ....'
-                    sh 'npm version minor --no-git-tag-version'
-                     env.APP_VERSION = sh(
-                        script: "node -p \"require('./package.json').version\"",
-                        returnStdout: true
-                        ).trim()
-                     env.IMAGE_TAG = "${env.APP_VERSION}-${env.BUILD_NUMBER}"
-                     echo "Application version: ${env.APP_VERSION}"
-                     echo "Docker image tag: ${env.IMAGE_TAG}"
+                dir('app'){
+                    script {
+                        echo 'incrementing app version ....'
+                        sh 'npm version minor --no-git-tag-version'
+                        env.APP_VERSION = sh(
+                            script: "node -p \"require('./package.json').version\"",
+                            returnStdout: true
+                            ).trim()
+                        env.IMAGE_TAG = "${env.APP_VERSION}-${env.BUILD_NUMBER}"
+                        echo "Application version: ${env.APP_VERSION}"
+                        echo "Docker image tag: ${env.IMAGE_TAG}"
+                    }
                 }
             }
         }
         stage ("run tests") {
             steps {
-                script {
-                    echo 'Installing dependencies...'
-                    sh 'npm install'
-                    echo 'Running tests...'
-                    sh 'npm test'
+                dir('app'){
+                    script {
+                        echo 'Installing dependencies...'
+                        sh 'npm install'
+                        echo 'Running tests...'
+                        sh 'npm test'
+                    }
                 }
             }
         }
         stage ("package nodejs app ") {
             steps {
-                script {
-                    echo 'Packaging Node.js application...'
-                    sh 'npm pack'
+                dir('app'){
+                    script {
+                        echo 'Packaging Node.js application...'
+                        sh 'npm pack'
+                    }
                 }
             }
         }
