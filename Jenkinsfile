@@ -79,12 +79,13 @@ pipeline {
             steps{
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-cred', passwordVariable: 'GIT_PASS', usernameVariable:'GIT_USER')]) {
-                    sh 'git remote set-url origin https://${USER}:${PASS}@github.com/Titobid/jenkins-project-08.git'
+                    sh 'git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/Titobid/jenkins-project-08.git'
                     sh 'git config --global user.email "jenkins@example.com" '
                     sh 'git config --global user.name "jenkins" '
-                    sh '''if [ -f package-lock.json ]; then
-                        git add package-lock.json
-                        fi'''
+                    sh 'git add app/package.json'
+                    sh '''if [ -f app/package-lock.json ]; then
+                          git add app/package-lock.json
+                          fi'''
                     sh 'git commit -m "ci: bump version to $APP_VERSION"'
                     sh 'git push origin HEAD:main'
                     sh 'git status'
