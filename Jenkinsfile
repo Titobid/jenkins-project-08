@@ -68,7 +68,7 @@ pipeline {
                     steps {
                         script{
                             echo 'Pushing docker image .... '
-                            withCredentials([script.usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_PASS', usernameVariable:'DOCKER_USER')]){
+                            withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_PASS', usernameVariable:'DOCKER_USER')]){
                             sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                             sh "docker push $DOCKER_REPOSITORY:$IMAGE_TAG"
                             }
@@ -78,7 +78,7 @@ pipeline {
         stage ("commiting version update") {
             steps{
                 script {
-                    withCredentials([script.usernamePassword(credentialsId: 'github-cred', passwordVariable: 'GIT_PASS', usernameVariable:'GIT_USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-cred', passwordVariable: 'GIT_PASS', usernameVariable:'GIT_USER')]) {
                     sh 'git remote set-url origin https://${USER}:${PASS}@github.com/Titobid/jenkins-project-08.git'
                     sh 'git config --global user.email "jenkins@example.com" '
                     sh 'git config --global user.name "jenkins" '
